@@ -1,83 +1,79 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
+import { getAllMovies } from './index.js';
 
-import { addWatchedMovie, add, removeWatchedMovie, getWatchedMovies, getAllMovies } from './index.js';
+const App = (props) => {
+  const {add, addWatchedMovie, getWatchedMovies, removeWatchedMovie} = props;
+  const [title, setTitle] = useState("");
+  const [image, setImage] = useState("");
+  const [comment, setComment] = useState("");
 
-const getMoviesComponents = (movies) => {
-  var components = [];
+  const getMoviesComponents = (movies) => {
+    const components = [];
 
-  movies.forEach(function(movie) {
-    components.push(
-      <div className="all">
-        <div>
-          <img src={movie.image} height="100px" />
+    movies.forEach(movie => {
+      components.push(
+        <div className="all">
+          <div>
+            <img src={movie.image} className="movieImg" alt='img' />
+          </div>
+          <span>
+            <a className="movie-watched" href="#" onClick={() => { addWatchedMovie(movie.title, movie.comment, movie.image) }}>
+              {movie.title}
+            </a>
+          </span>
+          <br />
+          <span>{movie.comment}</span>
+          <br />
+          <br />
         </div>
-        <span>
-          <a className="movie-watched" href="#" onClick={function() { addWatchedMovie(movie.title, movie.comment, movie.image) }}>
-            {movie.title}
-          </a>
-        </span>
-        <br />
-        <span>
-          {movie.comment}
-        </span>
-        <br />
-        <br />
-      </div>
-    )
-  })
+      )
+    })
+    return components;
+  }
 
-  return components;
-}
+  const getWatchedMoviesComponents = (movies) => {
+    const components = [];
 
-function getWatchedMoviesComponents(movies) {
-  var components = [];
-
-  movies.forEach(function(movie) {
-    components.push(movie && (
-      <div className="watched">
-        <div>
-          <img src={movie.image} height="100px" />
+    movies.forEach(movie => {
+      components.push(movie && (
+        <div className="watched">
+          <div>
+            <img src={movie.image} className="movieImg" alt='img' />
+          </div>
+          <span>
+            <a className="movie-watched" href="#" onClick={() => { removeWatchedMovie(movie.title) }}>
+              {movie.title}
+            </a>
+          </span>
+          <br />
+          <span>
+            {movie.comment}
+          </span>
+          <br />
+          <br />
         </div>
-        <span>
-          <a className="movie-watched" href="#" onClick={function() { removeWatchedMovie(movie.title) }}>
-            {movie.title}
-          </a>
-        </span>
-        <br />
-        <span>
-          {movie.comment}
-        </span>
-        <br />
-        <br />
-      </div>
-    ))
-  })
+      ))
+    })
+    return components;
+  }
 
-  return components;
-}
-
-function App(props) {
   return (
     <div className="App">
-      <h1>Reactive Movies!</h1>
-      <h1>Add movie!</h1>
-      <b>TITLE:<br /><input type="text" onChange={function(e) { title = e.target.value; }} /></b><br />
-      <b>IMAGE URL:<br /><input type="text" onChange={function(e) { image = e.target.value; }} /></b><br />
-      <b>COMMENT:<br /><input type="text" onChange={function(e) { comment = e.target.value; }} /></b><br />
-      <input type="button" onClick={function(e) { add(title, image, comment); }} value="ADD MOVIE" />
-
+      <h1 className="heading">Reactive Movies!</h1>
+      <h1 className="addingTitle">Add movie!</h1>
+      <div>
+        <p className="forms">TITLE</p><input className="formsInputs" onChange={e => setTitle(e.target.value)} />
+        <p className="forms">IMAGE</p><input className="formsInputs" onChange={e => setImage(e.target.value)} />
+        <p className="forms">COMMENT</p><input className="formsInputs" onChange={e => setComment(e.target.value)} />
+      </div>
+      <button className="addMovieButton" onClick={() => add(title, image, comment)}>ADD MOVIE</button>
       <h1>Watchlist:</h1>
       {getMoviesComponents(getAllMovies())}
-
       <h1>Already watched:</h1>
       {getWatchedMoviesComponents(getWatchedMovies())}
     </div>
   );
-}
-
-var title = '';
-var image = '';
-var comment = '';
+};
 
 export default App;

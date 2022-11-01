@@ -1,3 +1,58 @@
 .App {
   text-align: center;
 }
+
+.movieImg {
+ height: 250px;
+ width: 250px;
+}
+
+.heading {
+  font-size: 40px;
+  -webkit-animation: blink  2s linear infinite;
+  animation: blink 2s linear infinite;
+}
+
+@-webkit-keyframes blink { 
+	0% { color: rgb(0, 0, 0); }
+	50% { color: rgb(250, 224, 224); }
+	100% { color: rgb(0, 0, 0); }
+}
+
+@keyframes blink {  
+	0% { color: rgb(2, 0, 0); }
+	50% { color: rgb(244, 223, 223); }
+	100% { color: rgb(0, 0, 0); } 
+}
+
+.forms {
+  font-weight: 600;
+}
+
+.formsInputs {
+  border-radius: 5px;
+  height: 20px;
+  border: none;
+  padding: 3px;
+}
+
+.formsInputs:active, :hover, :focus {
+  outline: 0;
+  outline-offset: 0;
+}
+
+.addMovieButton {
+  margin-top: 50px;
+  padding: 10px;
+  font-weight: bold;
+  color: white;
+  background-color: black;
+  border: none;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.addMovieButton:hover {
+  color: black;
+  background-color: white;
+}
